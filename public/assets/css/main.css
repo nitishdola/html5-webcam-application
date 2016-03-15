@@ -1688,8 +1688,7 @@ span.red {
 }
 .widget.box .widget-header .toolbar.no-padding .btn {
   font-size: 13px;
-  padding: 8px 7px;
-  padding-top: 8px;
+  line-height: 35px;
   margin-top: 1px;
 }
 .widget.box .widget-content {
@@ -1728,6 +1727,10 @@ span.red {
   width: 100%;
   border-bottom: 1px solid #d9d9d9;
   border-top: 1px solid #fff;
+}
+.widget > .divider.bright,
+.widget .widget-content > .divider.bright {
+  border-bottom-color: #ececec;
 }
 .widget .widget-content > .divider {
   margin: 5px 0;
@@ -2688,6 +2691,14 @@ label > span.required {
 .table .progress {
   margin-bottom: 0;
 }
+/* * * * * * * * * * * *
+ * Others
+ * * * * * * * * * * * */
+.table-vertical-align tr,
+.table-vertical-align th,
+.table-vertical-align td {
+  vertical-align: middle !important;
+}
 /* # Charts
 ================================================== */
 .chart {
@@ -3018,10 +3029,12 @@ ul.stats li.light strong {
 .tabbable-custom > .nav-tabs {
   border: none;
   margin: 0px;
+  top: 0;
 }
 .tabbable-custom > .nav-tabs > li {
   margin-right: 2px;
   border-top: 2px solid transparent;
+  float: left;
 }
 .tabbable-custom > .nav-tabs > li.active {
   border-top: 3px solid #4d7496;
@@ -3039,6 +3052,7 @@ ul.stats li.light strong {
 .tabbable-custom > .nav-tabs > li > a {
   margin-right: 0;
   padding: 5px 10px;
+  line-height: 1.428571429;
 }
 .tabbable-custom > .nav-tabs > li > a:hover,
 .tabbable-custom > .nav-tabs > li > a:active {
@@ -3052,6 +3066,7 @@ ul.stats li.light strong {
   border-radius: 0;
   padding: 10px;
   overflow: auto;
+  margin-top: 0;
 }
 .tabbable-custom.tabbable-full-width .nav-tabs > li > a {
   font-size: 15px;

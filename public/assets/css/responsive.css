@@ -123,11 +123,25 @@
   #divider {
     left: -8px;
   }
+  .navbar-left.navbar-left-responsive {
+    position: absolute;
+    width: 100%;
+    background: #2a4053;
+    margin-top: 48px !important;
+    margin-left: -20px;
+    display: none;
+  }
+  .navbar-left.navbar-left-responsive > li {
+    border-right: none;
+  }
 }
 @media (max-width: 767px) {
   .navbar .navbar-brand {
     padding: 10px 20px 10px;
     margin-left: -10px;
+  }
+  .navbar-left.navbar-left-responsive {
+    margin-left: 0;
   }
 }
 @media (min-width: 980px) {

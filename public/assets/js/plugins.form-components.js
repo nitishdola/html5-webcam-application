@@ -143,7 +143,15 @@ var FormComponents = function() {
 					} else {
 						$(element).addClass(errorClass).removeClass(validClass);
 					}
-					$(element).closest(".form-group").addClass(errorClass).removeClass(validClass);
+
+					// @see http://support.stammtec.de/discussion/412/form-vertical-validation
+					if ($(element).closest("form").hasClass('form-vertical')) {
+						var class_selector = "*[class^=col-]";
+					} else {
+						var class_selector = ".form-group";
+					}
+
+					$(element).closest(class_selector).addClass(errorClass).removeClass(validClass);
 				},
 				unhighlight: function(element, errorClass, validClass) {
 					if (element.type === 'radio') {
@@ -151,19 +159,35 @@ var FormComponents = function() {
 					} else {
 						$(element).removeClass(errorClass).addClass(validClass);
 					}
-					$(element).closest(".form-group").removeClass(errorClass).addClass(validClass);
+
+					// @see http://support.stammtec.de/discussion/412/form-vertical-validation
+					if ($(element).closest("form").hasClass('form-vertical')) {
+						var class_selector = "*[class^=col-]";
+					} else {
+						var class_selector = ".form-group";
+					}
+
+					$(element).closest(class_selector).removeClass(errorClass).addClass(validClass);
 
 					// Fix for not removing label in BS3
-					$(element).closest('.form-group').find('label[generated="true"]').html('');
+					$(element).closest(class_selector).find('label[generated="true"]').html('');
 				}
 			});
 
 			var _base_resetForm = $.validator.prototype.resetForm;
 			$.extend( $.validator.prototype, {
 				resetForm: function() {
+					var resetForm_this = this;
 					_base_resetForm.call( this );
-					this.elements().closest('.form-group')
-						.removeClass(this.settings.errorClass + ' ' + this.settings.validClass);
+
+					$(this.currentForm).find('.form-group').each(function () {
+						$(this).removeClass(resetForm_this.settings.errorClass + ' ' + resetForm_this.settings.validClass);
+					});
+
+					// Removing states from select2-boxes
+					$(this.currentForm).find('.select2-container').removeClass(resetForm_this.settings.errorClass + ' ' + resetForm_this.settings.validClass);
+
+					$(this.currentForm).find('label[generated="true"]').html('');
 				},
 				showLabel: function(element, message) {
 					var label = this.errorsFor( element );

@@ -158,10 +158,11 @@ var Login = function() {
 				},
 
 				submitHandler: function (form) {
+					// This is just example code for the live preview
+					//
+					// In reality, you want to remove this submitHandler
+					// to use the native browser submitting
 					window.location.href = "index.html";
-
-					// Maybe you want here something like:
-					// $(form).submit();
 				}
 			});
 		}

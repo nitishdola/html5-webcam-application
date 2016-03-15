@@ -129,6 +129,8 @@ var Plugins = function() {
 			container: 'body'
 		});
 
+		// Use e.g. "#container" as container (instead of "body")
+		// if you're experience errors when using Ajax
 		$('.bs-tooltip').tooltip({
 			container: 'body'
 		});
@@ -308,6 +310,13 @@ var Plugins = function() {
 					});
 				}
 
+				// TableTools and ColVis
+				if (self.hasClass('table-tabletools') && self.hasClass('table-colvis')) {
+					$.extend(true, options, {
+						"sDom": "<'row'<'dataTables_header clearfix'<'col-md-6'l><'col-md-6'TCf>r>>t<'row'<'dataTables_footer clearfix'<'col-md-6'i><'col-md-6'p>>>", // C is new
+					});
+				}
+
 				// If ColVis is used with checkable Tables
 				if (self.hasClass('table-checkable') && self.hasClass('table-colvis')) {
 					$.extend(true, options, {
@@ -349,7 +358,43 @@ var Plugins = function() {
 					});
 				}
 
-				$(this).dataTable(options);
+				// Set options via external function
+				var data_dataTableFunction = self.data('datatableFunction');
+				if (typeof data_dataTableFunction != 'undefined') {
+					$.extend(true, options, window[data_dataTableFunction]() );
+				}
+
+				// Check, if table should be initialized with a ColumnFilter
+				if (self.hasClass('table-columnfilter')) {
+					// With ColumnFilter
+
+					var options_columnfilter = {};
+
+					var data_columnFilter = self.data('columnfilter');
+					if (typeof data_columnFilter != 'undefined') {
+						$.extend(true, options_columnfilter, data_columnFilter);
+					}
+
+					$(this).dataTable(options).columnFilter(options_columnfilter);
+
+					// Style inputs
+					self.find('.filter_column').each(function() {
+						// Check, if selectboxes should be converted into Select2s
+						var data_columnFilterSelect2 = self.data('columnfilterSelect2');
+						if (typeof data_columnFilterSelect2 != 'undefined') {
+							$(this).children('input').addClass('form-control');
+
+							$(this).children('select').addClass('full-width-fix').select2({
+								placeholderOption: 'first'
+							});
+						} else {
+							$(this).children('input, select').addClass('form-control');
+						}
+					});
+				} else {
+					// Without ColumnFilter (regular)
+					$(this).dataTable(options);
+				}
 			});
 		}
 	}

@@ -51,6 +51,17 @@ var App = function() {
 			$('#container').toggleClass('sidebar-closed');
 		});
 
+		/**
+		 * Top-Left-Menu-Toggle-Button
+		 */
+
+		$('.toggle-top-left-menu').click(function(e) {
+			e.preventDefault();
+
+			// Toggle visibility
+			$('.navbar-left.navbar-left-responsive').slideToggle(200);
+		});
+
 		var handleElements = function() {
 			// First visible childs add .first
 			$('.crumbs .crumb-buttons > li').removeClass('first');
@@ -60,6 +71,9 @@ var App = function() {
 			if ($('body').hasClass('nav-open')) {
 				$('body').toggleClass('nav-open');
 			}
+
+			// Set default visibility state
+			$('.navbar-left.navbar-left-responsive').removeAttr('style');
 
 			// Add additional scrollbars
 			handleScrollbars();
@@ -78,6 +92,8 @@ var App = function() {
 		});
 		$(window).bind('enterBreakpoint320', function() {
 			handleElements();
+
+			resetResizeableSidebar();
 		});
 
 		$(window).bind('exitBreakpoint480', function() {
@@ -85,6 +101,8 @@ var App = function() {
 		});
 		$(window).bind('enterBreakpoint480', function() {
 			handleElements();
+
+			resetResizeableSidebar();
 		});
 
 		$(window).bind('exitBreakpoint768', function() {
@@ -92,6 +110,8 @@ var App = function() {
 		});
 		$(window).bind('enterBreakpoint768', function() {
 			handleElements();
+
+			resetResizeableSidebar();
 		});
 
 		$(window).bind('exitBreakpoint979', function() {
@@ -308,6 +328,16 @@ var App = function() {
 		_handleResizeable();
 	}
 
+	/**
+	 * Removes the CSS-styles added with jQuery while resizing the sidebar
+	 */
+	var resetResizeableSidebar = function() {
+		$('#sidebar').css("width", "");
+		$('#sidebar-content').css("width", "");
+		$('#content').css("margin-left", "");
+		$('#divider').css("margin-left", "");
+	}
+
 	var handleScrollbars = function() {
 		var android_chrome = /android.*chrom(e|ium)/.test(navigator.userAgent.toLowerCase());
 
@@ -321,7 +351,7 @@ var App = function() {
 				//
 				// Awaiting update from Google
 
-				if (android_chrome) {
+				if (android_chrome && !$('#sidebar').hasClass('sidebar-fixed-responsive')) {
 					var wheelStepInt = 100;
 					$('#sidebar').attr('style', 'position: absolute !important;');
 
@@ -336,12 +366,12 @@ var App = function() {
 					}
 				} else {
 					var wheelStepInt = 7;
-				}
 
-				$('#sidebar-content').slimscroll({
-					'height': '100%',
-					wheelStep: wheelStepInt
-				});
+					$('#sidebar-content').slimscroll({
+						'height': '100%',
+						wheelStep: wheelStepInt
+					});
+				}
 			}
 		}
 	}
@@ -469,6 +499,27 @@ var App = function() {
 		$( '.table-checkable tbody tr td.checkbox-column :checkbox' ).on('change', function() {
 			var checked = $( this ).prop( 'checked' );
 			$( this ).closest('tr').toggleClass( 'checked', checked );
+		});
+
+		// Feature to toggle header checkbox on pagination (if necessary)
+		$('.datatable.table-checkable').bind('draw', function() {
+			var checkboxes_count         = $('tbody tr td.checkbox-column :checkbox', this).length;
+			var checkboxes_checked_count = $('tbody tr td.checkbox-column :checkbox:checked', this).length;
+
+			var $toggle_all_checkbox     = $('thead th.checkbox-column :checkbox', this);
+			var checked                  = false;
+
+			if (checkboxes_count == checkboxes_checked_count && checkboxes_count != 0) {
+				checked = true;
+			} else {
+				checked = false;
+			}
+
+			$toggle_all_checkbox.prop( "checked", checked );
+
+			if ($toggle_all_checkbox.hasClass('uniform')) {
+				$.uniform.update($toggle_all_checkbox);
+			}
 		});
 	}
 
