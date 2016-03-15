@@ -28,6 +28,21 @@ Route::group(['middleware' => ['admin']], function () {
     Route::post('admin/register', 'Adminauth\AuthController@register');
 
     Route::get('/admin', 'Admin\AdminHomeController@index');
+
+    Route::group(['prefix'=>'scheme'], function() {
+        Route::get('/list-all', [
+            'as' => 'scheme.index',
+            'uses' => 'SchemesController@index'
+        ]);
+        Route::get('/create', [
+            'as' => 'scheme.create',
+            'uses' => 'SchemesController@create'
+        ]);
+        Route::post('/store', [
+            'as' => 'scheme.store',
+            'uses' => 'SchemesController@store'
+        ]);
+    });
 });
 
 
