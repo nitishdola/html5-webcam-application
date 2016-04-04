@@ -29,27 +29,26 @@ Route::group(['middleware' => ['admin']], function () {
 
     Route::get('/admin', 'Admin\AdminHomeController@index');
 
-    Route::group(['prefix'=>'scheme'], function() {
+    Route::group(['prefix'=>'receptionist'], function() {
         Route::get('/list-all', [
-            'as' => 'scheme.index',
-            'uses' => 'SchemesController@index'
+            'as' => 'receptionist.index',
+            'uses' => 'ReceptionistsController@index'
         ]);
         Route::get('/create', [
-            'as' => 'scheme.create',
-            'uses' => 'SchemesController@create'
+            'as' => 'receptionist.create',
+            'uses' => 'ReceptionistsController@create'
         ]);
         Route::post('/store', [
-            'as' => 'scheme.store',
-            'uses' => 'SchemesController@store'
+            'as' => 'receptionist.store',
+            'uses' => 'ReceptionistsController@store'
         ]);
     });
 });
 
-
-
+Route::get('/gpass', function () {
+    return $password = bcrypt('it_arunachal');
+});
 Route::group(['middleware' => 'web'], function () {
     Route::auth();
 	Route::get('/home', 'HomeController@index');
-	
-	
 });

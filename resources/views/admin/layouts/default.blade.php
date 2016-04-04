@@ -18,7 +18,7 @@
 	<![endif]-->
 
 	<!-- Theme -->
-	<link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" type="text/css" />
+	
 	<link href="{{ asset('assets/css/responsive.css') }}" rel="stylesheet" type="text/css" />
 	<link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet" type="text/css" />
 
@@ -89,6 +89,15 @@
 	<script type="text/javascript" src="{{ asset('assets/js/app.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('assets/js/plugins.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('assets/js/plugins.form-components.js') }}"></script>
+
+	<link href="{{ asset('assets/css/main.css') }}" rel="stylesheet" type="text/css" />
+
+	<style>
+		input[type="password"] {	
+			padding: 10px;
+			border: 1px solid #D8D8D8;
+		}
+	</style>
 
 	<script>
 	$(document).ready(function(){

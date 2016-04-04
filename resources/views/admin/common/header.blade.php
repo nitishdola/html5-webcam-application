@@ -8,7 +8,7 @@
 
 			<!-- Logo -->
 			<a class="navbar-brand" href="index.html">
-				<strong>SJETA</strong>
+				<strong>Arunachal Pradesh IT</strong>
 			</a>
 			<!-- /logo -->
 

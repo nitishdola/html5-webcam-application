@@ -13,8 +13,9 @@
 
     <!-- Styles -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-    {{-- <link href="{{ elixir('css/app.css') }}" rel="stylesheet"> --}}
 
+    <link href="{{ asset('assets/css/jquery.datetimepicker.css') }}" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" media="screen" href="{{ asset('assets/css/webcam/Photobooth.css') }}" />
     <style>
         body {
             font-family: 'Lato';
@@ -77,6 +78,14 @@
     <!-- JavaScripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-    {{-- <script src="{{ elixir('js/app.js') }}"></script> --}}
+    <script src="{{ asset('assets/js/jquery.datetimepicker.js') }}"></script>
+    
+    <script>
+        $(document).ready(function(){
+            $('.datetimepicker').datetimepicker({format:'d-m-Y h:i A', step:10});
+        });
+    </script>
+
+    @yield('page_libraries')
 </body>
 </html>
